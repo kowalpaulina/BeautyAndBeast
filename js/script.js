@@ -29,10 +29,10 @@ var filterByDateInput = document.getElementById("filterByDate");
 var filterbyFunctionInput = document.getElementById("filterbyFunction");
 var filterByExperienceInput = document.getElementById("filterByExperience");
 var inputs = document.querySelectorAll("input");
-var currentToDisplay,currentDataToDisplay,currentDateParameter,currentPage,key,numberOfPages,i,trArrayforSortByDate,re,arrayOfIds,arrayOfFirstNames,arrayOfDate,arrayExperience;
+var selectedDate,currentToDisplay,currentDataToDisplay,currentDateParameter,currentPage,key,numberOfPages,i,trArrayforSortByDate,re,arrayOfIds,arrayOfFirstNames,arrayOfDate,arrayExperience;
 
 function setDataPicker(person){
-     $( "#datepicker" ).datepicker({ dateFormat: 'dd.mm.yy ',
+     $("#datepicker").datepicker({ dateFormat: 'dd.mm.yy ',
                         timeFormat:  "hh:mm",
                         changeMonth: true,
                         changeYear: true,
@@ -67,34 +67,46 @@ function getJson(){
          }); 
         
         $("#sortById").click(function(){
-            sortTable(person,"id","asc");});  
+            sortTable(person,"id","asc");
+            clearInputsValue();});  
         $("#sortByIdDesc").click(function(){
-            sortTable(person,"id","desc");}); 
+            sortTable(person,"id","desc");
+            clearInputsValue();}); 
         
         $("#sortByName").click(function(){
-            sortTable(person,name,"asc");});  
+            sortTable(person,name,"asc");
+            clearInputsValue();});  
         $("#sortByNameDesc").click(function(){
-            sortTable(person,name,"desc");}); 
+            sortTable(person,name,"desc");
+            clearInputsValue();}); 
         
          $("#sortByLastName").click(function(){
-            sortTable(person,"lname","asc");});  
+            sortTable(person,"lname","asc");
+            clearInputsValue();});  
         $("#sortByLastNameDesc").click(function(){
-            sortTable(person,"lname","desc");});
+            sortTable(person,"lname","desc");
+            clearInputsValue();});
         
         $("#sortByDate").click(function(){
-            getAlltTrForSortByDate(person,"asc");});
+            getAlltTrForSortByDate(person,"asc");
+            clearInputsValue();});
         $("#sortByDateDesc").click(function(){
-            getAlltTrForSortByDate(person,"desc");});
+            getAlltTrForSortByDate(person,"desc");
+            clearInputsValue();});
         
         $("#sortByFunction").click(function(){
-            sortTable(person,"function","asc");});
+            sortTable(person,"function","asc");
+            clearInputsValue();});
         $("#sortByFunctionDesc").click(function(){
-            sortTable(person,"function","desc");});
+            sortTable(person,"function","desc");
+            clearInputsValue();});
         
         $("#sortByExperience").click(function(){
-            sortTable(person,"experience","asc");});
+            sortTable(person,"experience","asc");
+            clearInputsValue();});
         $("#sortByExperienceDesc").click(function(){
-            sortTable(person,"experience","desc");});
+            sortTable(person,"experience","desc");
+            clearInputsValue();});
     });
 }
 
@@ -109,7 +121,7 @@ function displayTable(dataToDisplay,optionalDateParameter){
 
 function clearInputsValue(){
     for(i=0;i<inputs.length;i++){
-                inputs[i].value = "";}
+         inputs[i].value = "";}
 }
 
 function changePage(page,dataToDisplay,optionalDateParameter){
@@ -204,7 +216,6 @@ function findPerson(person){
         for(var i = 0; i < person.length; i++) {
                 if(person[i].function.toLowerCase().includes(selectedFunction.toLowerCase())) {
                     arrayOfPositions.push(person[i]);
-                    //getUniqueArray(arrayOfPositions);
                }
         }
         var results=[];
@@ -214,6 +225,8 @@ function findPerson(person){
         }else{
             displayTable(arrayOfPositions); 
         }
+        clearInputsValue();
+        filterbyFunctionInput.value=selectedFunction;
     }
     
     function filterById(){
@@ -222,7 +235,6 @@ function findPerson(person){
         for(var i = 0; i < person.length; i++) {
                 if((person[i].id).toString().includes(selectedId)) {
                     arrayOfIds.push(person[i]);
-                    //getUniqueArray(arrayOfIds);
                }
         }
         var results=[];
@@ -232,6 +244,8 @@ function findPerson(person){
         }else{
             displayTable(arrayOfIds); 
         }
+        clearInputsValue();
+        filterByIdInput.value=selectedId;
     }
     
     
@@ -241,7 +255,6 @@ function findPerson(person){
         for(var i = 0; i < person.length; i++) {
                 if(person[i].firstName.toLowerCase().includes(selectedFirstName.toLowerCase())) {
                     arrayOfFirstNames.push(person[i]);
-                    //getUniqueArray(arrayOfFirstNames);
                }
         }
         var results=[];
@@ -251,6 +264,8 @@ function findPerson(person){
         }else{
             displayTable(arrayOfFirstNames); 
         }
+        clearInputsValue();
+        filterByFirstNameInput.value=selectedFirstName;
     }
     
     function filterByLastName(){
@@ -259,7 +274,7 @@ function findPerson(person){
         for(var i = 0; i < person.length; i++) {
                 if(person[i].lastName.toLowerCase().includes(selectedLastName.toLowerCase())) {
                     arrayOfLastNames.push(person[i]);
-                    //getUniqueArray(arrayOfLastNames);
+                   
                }
         }
         var results=[];
@@ -269,6 +284,9 @@ function findPerson(person){
         }else{
             displayTable(arrayOfLastNames); 
         }
+
+        clearInputsValue();
+        filterByLastNameInput.value=selectedLastName;
     }
     
     
@@ -278,7 +296,7 @@ function findPerson(person){
         for(var i = 0; i < person.length; i++) {
                 if((person[i].experience).toString().includes(selectedExperience)) {
                     arrayExperience.push(person[i]);
-                    //getUniqueArray(arrayExperience);
+                   
                }
         }
         var results=[];
@@ -288,17 +306,20 @@ function findPerson(person){
         }else{
            displayTable(arrayExperience); 
         }
+
+         clearInputsValue();
+        filterByExperienceInput.value=selectedExperience;
     }
 }
 
 function filterByDate(filterByDateInput,person){
         arrayOfDate=[];
+        selectedDate = filterByDateInput;
     
-        if(filterByDateInput ==='1.04.2017'){filterByDateInput = '1.4.2017';}    
+        if(filterByDateInput ==='1.07.1990'){filterByDateInput = '1.7.1990';}    
         for(var i = 0; i < person.length; i++) {
                 if(person[i].dateOfBirth.includes(filterByDateInput)) {
                     arrayOfDate.push(person[i]);
-                    //getUniqueArray(arrayOfDate);
                }
         }
     
@@ -379,8 +400,6 @@ function sortTable(data,atribute,order){
             displayTable(reverseOrderedFunction,false);
         }
     }
-   // displayTable(reverseOrderedNames,false); --> true lub false dla oznaczenia czy sortujemy po dacie, dla date = true;
-   //potrzebne ponieważ tablica z datami jest inaczej wyświetlana   
 }
     
     function sortByDate999(trArrayforSortByDate,order){ 
