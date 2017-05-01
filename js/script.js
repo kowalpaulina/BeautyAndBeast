@@ -29,7 +29,7 @@ var filterByDateInput = document.getElementById("filterByDate");
 var filterbyFunctionInput = document.getElementById("filterbyFunction");
 var filterByExperienceInput = document.getElementById("filterByExperience");
 var inputs = document.querySelectorAll("input");
-var selectedDate,currentToDisplay,currentDataToDisplay,currentDateParameter,currentPage,key,numberOfPages,i,trArrayforSortByDate,re,arrayOfIds,arrayOfFirstNames,arrayOfDate,arrayExperience;
+var selectedDate,currentToDisplay,currentDataToDisplay,currentDateParameter,currentPage,key,numberOfPages,i,trArrayforSortByDate,regex,arrayOfIds,arrayOfFirstNames,arrayOfDate,arrayExperience;
 
 function setDataPicker(person){
      $("#datepicker").datepicker({ dateFormat: 'dd.mm.yy ',
@@ -197,7 +197,7 @@ function getAlltTrForSortByDate(person,order){
         }
         trArrayforSortByDate.push(tr);       
 }
-        sortByDate999(trArrayforSortByDate,order);
+        sortByDate(trArrayforSortByDate,order);
 }
 
 //FILTERING 
@@ -402,7 +402,7 @@ function sortTable(data,atribute,order){
     }
 }
     
-    function sortByDate999(trArrayforSortByDate,order){ 
+    function sortByDate(trArrayforSortByDate,order){ 
         trArrayforSortByDate.sort(function(a, b){
             var first = a.children[3].textContent;
             var second = b.children[3].textContent;
@@ -424,8 +424,8 @@ function sortTable(data,atribute,order){
                  
     function convertDate(stringDateParametr){
         stringDateParametr;
-        re = /[.:\s]/;
-        var splitdate = stringDateParametr.split(re);
+        regex = /[.:\s]/;
+        var splitdate = stringDateParametr.split(regex);
         var date = new Date(splitdate[2],splitdate[1] - 1,splitdate[0],splitdate[3],splitdate[4]);  
         var timestamp = date.getTime();        
         return timestamp; 
